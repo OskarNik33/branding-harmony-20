@@ -3,21 +3,25 @@ import { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
+import { X } from "lucide-react";
 
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
-      if (window.innerWidth < 1024) {
-        setIsOpen(false);
-      } else {
+      if (window.innerWidth >= 1024) {
         setIsOpen(true);
+      } else {
+        setIsOpen(false);
       }
     };
+
+    // Initialize sidebar state
+    handleResize();
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -37,11 +41,24 @@ const Sidebar = () => {
     return false;
   };
 
+  // Close sidebar when clicking outside on mobile
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (isMobile && isOpen && !target.closest('.sidebar-container') && !target.closest('.sidebar-trigger')) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMobile, isOpen]);
+
   return (
     <>
-      {/* Sidebar trigger for mobile */}
+      {/* Sidebar trigger for all screen sizes */}
       <button 
-        className="lg:hidden fixed top-4 left-4 z-40 neo-button bg-background w-10 h-10 flex items-center justify-center"
+        className="sidebar-trigger fixed top-4 left-4 z-40 neo-button bg-background w-10 h-10 flex items-center justify-center"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle sidebar"
       >
@@ -52,20 +69,38 @@ const Sidebar = () => {
         </div>
       </button>
 
+      {/* Overlay for mobile */}
+      {isOpen && isMobile && (
+        <div 
+          className="fixed inset-0 z-20 bg-black/30 backdrop-blur-sm"
+          onClick={() => setIsOpen(false)}
+        ></div>
+      )}
+
       {/* Sidebar */}
       <div 
-        className={`fixed inset-y-0 left-0 z-30 w-64 transform transition-transform duration-300 ease-in-out ${
+        className={`sidebar-container fixed inset-y-0 left-0 z-30 w-64 transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0`}
+        }`}
       >
-        <div className="h-full backdrop-blur-md bg-sidebar/90 brutalist-border border-l-0 border-t-0 border-b-0 overflow-y-auto">
-          <div className="p-6">
-            <h1 className="font-mono font-bold text-2xl text-foreground">
-              OBLIKOVALSKY
-            </h1>
-            <p className="text-xs mt-1 text-muted-foreground font-mono">
-              DIGITAL DESIGNER
-            </p>
+        <div className="h-full backdrop-blur-xl bg-background/70 brutalist-border border-l-0 border-t-0 border-b-0 overflow-y-auto">
+          <div className="flex justify-between items-center p-6">
+            <div>
+              <h1 className="font-mono font-bold text-2xl text-foreground">
+                OBLIKOVALSKY
+              </h1>
+              <p className="text-xs mt-1 text-muted-foreground font-mono">
+                DIGITAL DESIGNER
+              </p>
+            </div>
+            
+            <button 
+              className="lg:hidden"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close sidebar"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
           
           <Separator className="mb-6" />

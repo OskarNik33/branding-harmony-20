@@ -46,18 +46,19 @@ const ThemeToggle = () => {
       style={getToggleStyles()}
     >
       <div className="text-xs mb-1 font-mono text-center">
-        {theme === "dark" ? "ON" : "OFF"}
+        ON
       </div>
       <div 
-        className={`switch brutalist-border ${theme === "dark" ? "on" : ""}`}
+        className="light-switch brutalist-border"
         onClick={toggleTheme}
         aria-label="Toggle theme"
         role="button"
         tabIndex={0}
       >
+        <div className={`switch-toggle ${theme === "dark" ? "on" : "off"}`}></div>
       </div>
       <div className="text-xs mt-1 font-mono text-center">
-        MODE
+        OFF
       </div>
     </div>
   );
