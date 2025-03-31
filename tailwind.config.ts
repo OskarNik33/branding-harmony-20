@@ -20,8 +20,8 @@ export default {
 		},
 		extend: {
 			fontFamily: {
+				mono: ['Space Mono', 'monospace'],
 				sans: ['Inter', 'sans-serif'],
-				display: ['Montserrat', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -58,21 +58,14 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+					DEFAULT: 'hsl(var(--background) / 0.8)',
+					foreground: 'hsl(var(--foreground))',
 				},
-				designer: {
-					primary: '#242424',
-					secondary: '#3B3B3B',
-					accent: '#0066FF',
-					light: '#F9F9F9',
-					muted: '#9B9B9B',
+				brutalist: {
+					dark: '#1F1F1F',
+					light: '#E7ECEF',
+					green: '#018068',
+					coral: '#F87474',
 				}
 			},
 			borderRadius: {
@@ -82,20 +75,12 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
 				},
 				'fade-in': {
 					'0%': { opacity: '0' },
@@ -104,13 +89,23 @@ export default {
 				'slide-up': {
 					'0%': { transform: 'translateY(10px)', opacity: '0' },
 					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'marquee': {
+					'0%': { transform: 'translateX(0%)' },
+					'100%': { transform: 'translateX(-100%)' }
+				},
+				'type': {
+					'0%': { width: '0' },
+					'100%': { width: '100%' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'fade-in': 'fade-in 0.5s ease-out',
-				'slide-up': 'slide-up 0.7s ease-out'
+				'slide-up': 'slide-up 0.7s ease-out',
+				'marquee': 'marquee 25s linear infinite',
+				'type': 'type 2s steps(20, end)'
 			}
 		}
 	},
