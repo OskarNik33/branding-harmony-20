@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
+
 const ThemeToggle = () => {
   const {
     theme,
@@ -14,6 +15,7 @@ const ThemeToggle = () => {
     x: 0,
     y: 0
   });
+
   useEffect(() => {
     // Load saved position from localStorage if available
     const savedPosition = localStorage.getItem('theme-toggle-position');
@@ -21,6 +23,7 @@ const ThemeToggle = () => {
       setPosition(JSON.parse(savedPosition));
     }
   }, []);
+
   const handleMouseDown = (e: React.MouseEvent) => {
     const rect = e.currentTarget.getBoundingClientRect();
     setDragOffset({
@@ -29,6 +32,7 @@ const ThemeToggle = () => {
     });
     setIsDragging(true);
   };
+
   const handleTouchStart = (e: React.TouchEvent) => {
     if (e.touches[0]) {
       const rect = e.currentTarget.getBoundingClientRect();
@@ -39,6 +43,7 @@ const ThemeToggle = () => {
       setIsDragging(true);
     }
   };
+
   const handleMouseMove = (e: MouseEvent) => {
     if (isDragging) {
       const newX = e.clientX - dragOffset.x;
@@ -63,6 +68,7 @@ const ThemeToggle = () => {
       }));
     }
   };
+
   const handleTouchMove = (e: TouchEvent) => {
     if (isDragging && e.touches[0]) {
       const newX = e.touches[0].clientX - dragOffset.x;
@@ -87,6 +93,7 @@ const ThemeToggle = () => {
       }));
     }
   };
+
   const handleMouseUp = () => {
     setIsDragging(false);
   };
@@ -104,21 +111,24 @@ const ThemeToggle = () => {
       window.removeEventListener('touchend', handleMouseUp);
     };
   }, [isDragging, dragOffset]);
+
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
+
   return <div className={`fixed z-50 transition-all duration-300 ease-out ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`} style={{
     left: `${position.x}px`,
     top: `${position.y}px`
   }} onMouseDown={handleMouseDown} onTouchStart={handleTouchStart}>
       <div className={`toggle-container ${theme === "dark" ? "on" : ""}`} onClick={toggleTheme} role="button" tabIndex={0} aria-label="Toggle theme">
         <div className="toggle-state off-state">
-          <img src="/light-switch-off.png" alt="Switch Off" className="w-20 h-30 select-none" />
+          <img src="/lovable-uploads/65c5527c-ba95-48c9-bbbd-00ba87c7e935.png" alt="Switch Off" className="w-20 h-30 select-none" />
         </div>
         <div className="toggle-state on-state">
-          <img alt="Switch On" className="w-20 h-30 select-none" src="/lovable-uploads/9ac21e63-8616-44ac-b234-0117faf3e317.png" />
+          <img src="/lovable-uploads/0f186f23-8812-4397-b90f-cf9bd21dd8ef.png" alt="Switch On" className="w-20 h-30 select-none" />
         </div>
       </div>
     </div>;
 };
+
 export default ThemeToggle;
