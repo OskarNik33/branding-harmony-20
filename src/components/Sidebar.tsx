@@ -13,11 +13,6 @@ const Sidebar = () => {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024);
-      if (window.innerWidth >= 1024) {
-        setIsOpen(true);
-      } else {
-        setIsOpen(false);
-      }
     };
 
     // Initialize sidebar state
@@ -45,22 +40,22 @@ const Sidebar = () => {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (isMobile && isOpen && !target.closest('.sidebar-container') && !target.closest('.sidebar-trigger')) {
+      if (isOpen && !target.closest('.sidebar-container') && !target.closest('.sidebar-trigger')) {
         setIsOpen(false);
       }
     };
 
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, [isMobile, isOpen]);
+  }, [isOpen]);
 
   return (
     <>
-      {/* Sidebar trigger - only visible when sidebar is closed */}
+      {/* Sidebar trigger - visible on all screen sizes when sidebar is closed */}
       {!isOpen && (
         <button 
           className="sidebar-trigger fixed top-4 left-4 z-40 neo-button bg-background w-10 h-10 flex items-center justify-center"
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={() => setIsOpen(true)}
           aria-label="Toggle sidebar"
         >
           <div className="w-5 h-5 relative">
@@ -71,8 +66,8 @@ const Sidebar = () => {
         </button>
       )}
 
-      {/* Overlay for mobile */}
-      {isOpen && isMobile && (
+      {/* Overlay for when sidebar is open */}
+      {isOpen && (
         <div 
           className="fixed inset-0 z-20 bg-black/30 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
@@ -97,7 +92,7 @@ const Sidebar = () => {
             </div>
             
             <button 
-              className="lg:hidden"
+              className=""
               onClick={() => setIsOpen(false)}
               aria-label="Close sidebar"
             >
@@ -118,7 +113,7 @@ const Sidebar = () => {
                         ? 'text-accent font-bold' 
                         : 'text-foreground hover:text-primary'
                     }`}
-                    onClick={() => isMobile && setIsOpen(false)}
+                    onClick={() => setIsOpen(false)}
                   >
                     {route.label}
                   </Link>

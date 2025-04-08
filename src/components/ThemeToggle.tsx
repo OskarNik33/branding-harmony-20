@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useTheme } from "@/providers/ThemeProvider";
 
@@ -50,8 +51,8 @@ const ThemeToggle = () => {
       const newY = e.clientY - dragOffset.y;
 
       // Ensure the toggle stays within viewport bounds
-      const toggleWidth = 80; // Estimated width of the toggle
-      const toggleHeight = 120; // Estimated height of the toggle
+      const toggleWidth = 60; // Adjusted width
+      const toggleHeight = 90; // Adjusted height
       const maxX = window.innerWidth - toggleWidth;
       const maxY = window.innerHeight - toggleHeight;
       const boundedX = Math.max(0, Math.min(newX, maxX));
@@ -75,8 +76,8 @@ const ThemeToggle = () => {
       const newY = e.touches[0].clientY - dragOffset.y;
 
       // Ensure the toggle stays within viewport bounds
-      const toggleWidth = 80; // Estimated width of the toggle
-      const toggleHeight = 120; // Estimated height of the toggle
+      const toggleWidth = 60; // Adjusted width
+      const toggleHeight = 90; // Adjusted height
       const maxX = window.innerWidth - toggleWidth;
       const maxY = window.innerHeight - toggleHeight;
       const boundedX = Math.max(0, Math.min(newX, maxX));
@@ -120,12 +121,12 @@ const ThemeToggle = () => {
     left: `${position.x}px`,
     top: `${position.y}px`
   }} onMouseDown={handleMouseDown} onTouchStart={handleTouchStart}>
-      <div className={`toggle-container ${theme === "dark" ? "on" : ""}`} onClick={toggleTheme} role="button" tabIndex={0} aria-label="Toggle theme">
+      <div className={`toggle-container ${theme === "dark" ? "" : "on"}`} onClick={toggleTheme} role="button" tabIndex={0} aria-label="Toggle theme">
         <div className="toggle-state off-state">
-          <img src="/lovable-uploads/65c5527c-ba95-48c9-bbbd-00ba87c7e935.png" alt="Switch Off" className="w-20 h-30 select-none" />
+          <img src="/lovable-uploads/65c5527c-ba95-48c9-bbbd-00ba87c7e935.png" alt="Switch Off" className="w-16 h-24 sm:w-20 sm:h-30 select-none" />
         </div>
         <div className="toggle-state on-state">
-          <img src="/lovable-uploads/0f186f23-8812-4397-b90f-cf9bd21dd8ef.png" alt="Switch On" className="w-20 h-30 select-none" />
+          <img src="/lovable-uploads/0f186f23-8812-4397-b90f-cf9bd21dd8ef.png" alt="Switch On" className="w-16 h-24 sm:w-20 sm:h-30 select-none" />
         </div>
       </div>
     </div>;
