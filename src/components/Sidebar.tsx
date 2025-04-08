@@ -56,18 +56,20 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Sidebar trigger for all screen sizes */}
-      <button 
-        className="sidebar-trigger fixed top-4 left-4 z-40 neo-button bg-background w-10 h-10 flex items-center justify-center"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle sidebar"
-      >
-        <div className="w-5 h-5 relative">
-          <span className={`absolute h-0.5 w-full bg-foreground transform transition-all duration-300 ${isOpen ? 'rotate-45 top-2' : 'top-0'}`}></span>
-          <span className={`absolute h-0.5 w-full bg-foreground transform transition-all duration-300 top-2 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-          <span className={`absolute h-0.5 w-full bg-foreground transform transition-all duration-300 ${isOpen ? '-rotate-45 top-2' : 'top-4'}`}></span>
-        </div>
-      </button>
+      {/* Sidebar trigger - only visible when sidebar is closed */}
+      {!isOpen && (
+        <button 
+          className="sidebar-trigger fixed top-4 left-4 z-40 neo-button bg-background w-10 h-10 flex items-center justify-center"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle sidebar"
+        >
+          <div className="w-5 h-5 relative">
+            <span className="absolute h-0.5 w-full bg-foreground transform transition-all duration-300 top-0"></span>
+            <span className="absolute h-0.5 w-full bg-foreground transform transition-all duration-300 top-2"></span>
+            <span className="absolute h-0.5 w-full bg-foreground transform transition-all duration-300 top-4"></span>
+          </div>
+        </button>
+      )}
 
       {/* Overlay for mobile */}
       {isOpen && isMobile && (
