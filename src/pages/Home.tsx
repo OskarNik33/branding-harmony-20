@@ -97,7 +97,7 @@ const Home = () => {
                 onError={(e) => {
                   // If image fails to load, show a fallback
                   const target = e.target as HTMLImageElement;
-                  target.src = 'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?q=80&w=2940&auto=format&fit=crop';
+                  target.src = 'C:\Users\oskar\IdeaProjects\branding-harmony-20\src\lib\animacija-cernigoj\frames';
                 }}
               />
             </div>
