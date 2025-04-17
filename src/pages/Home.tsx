@@ -1,49 +1,60 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { useTypingEffect } from '@/hooks/useTypingEffect';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { useNavigate } from 'react-router-dom';
+import ScrollAnimation from '@/components/ScrollAnimation';
+
 
 const Home = () => {
   const navigate = useNavigate();
   const { displayText, isTyping } = useTypingEffect("Oblikovalsky", "Osky", 150, 1000);
-  const [currentFrame, setCurrentFrame] = useState(1);
   const [workRef, isWorkVisible] = useIntersectionObserver({ threshold: 0.3 });
-  const maxFrames = 5;
-  
-  // Animation frame reference
-  const animationRef = useRef<HTMLDivElement>(null);
-  const [animationVisible, setAnimationVisible] = useState(false);
-  
+
+
+  // Preload frames
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setAnimationVisible(entry.isIntersecting);
-      },
-      { threshold: 0.5 }
-    );
-    
-    if (animationRef.current) {
-      observer.observe(animationRef.current);
+    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = getCurrentFrame(i);
+      images.current.push(img);
     }
-    
-    return () => {
-      if (animationRef.current) {
-        observer.unobserve(animationRef.current);
-      }
-    };
   }, []);
-  
+
+  // Scroll animation logic
   useEffect(() => {
-    if (animationVisible) {
-      const interval = setInterval(() => {
-        setCurrentFrame(prev => (prev >= maxFrames ? 1 : prev + 1));
-      }, 200);
-      
-      return () => clearInterval(interval);
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext("2d");
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const maxScrollTop = document.body.scrollHeight - window.innerHeight;
+      const scrollFraction = scrollTop / maxScrollTop;
+      const frameIndex = Math.min(
+        TOTAL_FRAMES - 1,
+        Math.floor(scrollFraction * TOTAL_FRAMES)
+      );
+
+      requestAnimationFrame(() => {
+        const img = images.current[frameIndex];
+        if (img && context && canvas) {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.width = 1920;
+      canvas.height = 1080;
     }
-  }, [animationVisible]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-grid">
@@ -59,77 +70,45 @@ const Home = () => {
             DIGITAL DESIGN
           </h2>
           <p className="text-lg mb-12 max-w-2xl">
-            Creating unapologetically bold designs with a focus on raw expression, 
+            Creating unapologetically bold designs with a focus on raw expression,
             structural honesty, and interactive experiences.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Button 
-              className="neo-button bg-primary text-primary-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.8)]"
-              onClick={() => navigate('/portfolio')}
-            >
+            <Button onClick={() => navigate('/portfolio')}>
               VIEW WORK
             </Button>
-            <Button 
-              className="neo-button bg-accent text-accent-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.8)]"
-              onClick={() => navigate('/contact')}
-            >
+            <Button onClick={() => navigate('/contact')}>
               GET IN TOUCH
             </Button>
           </div>
         </div>
       </section>
-      
-      {/* Frame by Frame Animation */}
-      <section 
-        ref={animationRef} 
-        className="py-24 px-6 md:px-16 lg:pl-80 lg:pr-20 flex flex-col items-center"
-      >
-        <h2 className="text-3xl font-mono font-bold mb-16 self-start">
-          {"< SELECTED WORK >"}
-        </h2>
-        <div className="w-full max-w-4xl aspect-video brutalist-border overflow-hidden">
-          <div className="w-full h-full bg-muted flex items-center justify-center relative">
-            <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${animationVisible ? 'opacity-100' : 'opacity-0'}`}>
-              <img 
-                src={`/frame-${currentFrame}.jpg`} 
-                alt={`Animation frame ${currentFrame}`} 
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  // If image fails to load, show a fallback
-                  const target = e.target as HTMLImageElement;
-                  target.src = 'C:\Users\oskar\IdeaProjects\branding-harmony-20\src\lib\animacija-cernigoj\frames';
-                }}
-              />
-            </div>
-            <div className="absolute bottom-4 right-4 font-mono text-xs bg-background/80 px-2 py-1">
-              FRAME {currentFrame}/{maxFrames}
-            </div>
-          </div>
-        </div>
-      </section>
-      
+
+      {/* SCROLL CANVAS ANIMATION */}
+      <ScrollAnimation />
+
+
       {/* Featured Work */}
-      <section 
-        ref={workRef} 
+      <section
+        ref={workRef}
         className="py-24 px-6 md:px-16 lg:pl-80 lg:pr-20"
       >
         <h2 className="text-3xl font-mono font-bold mb-16">
           {"< FEATURED PROJECTS >"}
         </h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {featuredProjects.map((project, index) => (
-            <div 
-              key={project.title} 
+            <div
+              key={project.title}
               className={`thumbnail brutalist-card overflow-hidden ${isWorkVisible ? 'animate-fade-in' : 'opacity-0'}`}
               style={{ animationDelay: `${index * 150}ms` }}
             >
-              <img 
-                src={project.image} 
-                alt={project.title} 
+              <img
+                src={project.image}
+                alt={project.title}
                 className="w-full aspect-video object-cover"
                 onError={(e) => {
-                  // If image fails to load, show a fallback
                   const target = e.target as HTMLImageElement;
                   target.src = 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=2940&auto=format&fit=crop';
                 }}
@@ -141,17 +120,14 @@ const Home = () => {
             </div>
           ))}
         </div>
-        
+
         <div className="mt-16 text-center">
-          <Button 
-            className="neo-button bg-background text-foreground shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.8)]"
-            onClick={() => navigate('/portfolio')}
-          >
+          <Button onClick={() => navigate('/portfolio')}>
             VIEW ALL WORK
           </Button>
         </div>
       </section>
-      
+
       {/* Marquee Section */}
       <section className="py-12 overflow-hidden border-y-2 border-foreground">
         <div className="flex animate-marquee whitespace-nowrap">
