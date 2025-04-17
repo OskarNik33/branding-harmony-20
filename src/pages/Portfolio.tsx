@@ -77,7 +77,7 @@ const categories = [
   {
     name: 'Photography',
     projects: [
-      { title: 'URBAN GEOMETRY', year: '2023', image: 'public/images/IMG_6663.jpg' },
+      { title: 'ZHA - music', year: '2023', image: 'https://github.com/OskarNik33/branding-harmony-20/blob/fa245bd4801eb0627cb80bc4aefc131254e2caa7/public/images/IMG_6663.jpg' },
       { title: 'INDUSTRIAL SPACES', year: '2023', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2000' },
       { title: 'MODERN PORTRAITS', year: '2022', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2000' },
       { title: 'ARCHITECTURAL STUDY', year: '2022', image: 'https://images.unsplash.com/photo-1486744328743-c1a306f6caba?q=80&w=2000' },

@@ -48,14 +48,6 @@ const App = () => (
 );
 import ScrollAnimation from './ScrollAnimation'; // adjust the path if needed
 
-function App() {
-  return (
-    <>
-      <ScrollAnimation />
-      {/* your other content here */}
-    </>
-  );
-}
 
 
 export default App;
