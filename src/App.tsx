@@ -16,6 +16,8 @@ import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/NotFound";
 
+
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -44,5 +46,8 @@ const App = () => (
     </ThemeProvider>
   </QueryClientProvider>
 );
+import ScrollAnimation from './ScrollAnimation'; // adjust the path if needed
+
+
 
 export default App;
