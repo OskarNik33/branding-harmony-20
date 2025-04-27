@@ -1,5 +1,7 @@
 
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { projects } from '@/data/projects';
+import { ArrowLeft } from 'lucide-react';
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -7,10 +9,20 @@ const ProjectDetail = () => {
   // Find the project data based on the ID
   const project = projects.find(p => p.slug === id);
 
+  console.log("Project ID:", id);
+  console.log("Found project:", project);
+
   if (!project) {
     return (
       <div className="min-h-screen bg-grid px-6 md:px-16 lg:pl-80 lg:pr-20 py-24">
         <h1 className="text-4xl font-mono font-bold">Project not found</h1>
+        <p className="mt-4">
+          The project you're looking for doesn't exist or has been moved.
+        </p>
+        <Link to="/portfolio" className="inline-flex items-center mt-6 text-primary hover:underline">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Portfolio
+        </Link>
       </div>
     );
   }
@@ -18,7 +30,13 @@ const ProjectDetail = () => {
   return (
     <div className="min-h-screen bg-grid px-6 md:px-16 lg:pl-80 lg:pr-20 py-24">
       <div className="max-w-4xl mx-auto">
+        <Link to="/portfolio" className="inline-flex items-center mb-8 text-primary hover:underline">
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Portfolio
+        </Link>
+        
         <h1 className="text-4xl md:text-5xl font-mono font-bold mb-8">{project.title}</h1>
+        
         <div className="aspect-video w-full overflow-hidden rounded-lg mb-8">
           <img 
             src={project.image} 
@@ -26,14 +44,30 @@ const ProjectDetail = () => {
             className="w-full h-full object-cover"
           />
         </div>
+        
         <div className="space-y-6">
-          <p className="text-lg text-muted-foreground">{project.year}</p>
+          <div className="flex items-center">
+            <p className="text-lg text-muted-foreground">{project.year}</p>
+            {project.category && (
+              <span className="ml-4 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+                {project.category}
+              </span>
+            )}
+          </div>
+          
           <p className="text-lg">{project.description}</p>
+          
           {project.details && (
-            <div className="space-y-4">
-              {project.details.map((detail, index) => (
-                <p key={index} className="text-lg">{detail}</p>
-              ))}
+            <div className="space-y-4 mt-6">
+              <h2 className="text-2xl font-mono font-semibold">Project Details</h2>
+              <ul className="space-y-2">
+                {project.details.map((detail, index) => (
+                  <li key={index} className="text-lg flex items-start">
+                    <span className="mr-2">•</span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
         </div>
@@ -42,45 +76,4 @@ const ProjectDetail = () => {
   );
 };
 
-// Mock project data - this could be moved to a separate file later
-const projects = [
-  {
-    slug: 'konglomerat-2024',
-    title: 'Konglomerat 2024',
-    description: 'An exhibition organized by alumni and former students of Oblikovna, showcasing various art forms and design approaches.',
-    year: '2024',
-    image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=2940&auto=format&fit=crop',
-    details: [
-      'Developed comprehensive exhibition design system',
-      'Created cohesive visual identity across all materials',
-      'Coordinated with multiple stakeholders to ensure design consistency'
-    ]
-  },
-  {
-    slug: 'fanfara-2024',
-    title: '17. Fanfara - 2024',
-    description: 'The biggest student organised marketing conference in Slovenia, featuring innovative design solutions and brand strategies.',
-    year: '2024',
-    image: 'https://images.unsplash.com/photo-1483058712412-4245e9b90334?q=80&w=2940&auto=format&fit=crop',
-    details: [
-      'Led event branding initiatives',
-      'Designed comprehensive marketing materials',
-      'Developed digital and print assets'
-    ]
-  },
-  {
-    slug: 'generali-levji-delez',
-    title: 'Generali - Levji delež',
-    description: 'Created the Levji delež profile on Instagram, focusing on financial knowledge and investment confidence building.',
-    year: '2023',
-    image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=2940&auto=format&fit=crop',
-    details: [
-      'Developed social media strategy',
-      'Created educational content series',
-      'Designed visual identity for financial education content'
-    ]
-  }
-];
-
 export default ProjectDetail;
-
