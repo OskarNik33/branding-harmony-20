@@ -11,12 +11,11 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 import Home from "@/pages/Home";
 import Portfolio from "@/pages/Portfolio";
+import ProjectDetail from "@/pages/ProjectDetail";
 import Timeline from "@/pages/Timeline";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/NotFound";
-
-
 
 const queryClient = new QueryClient();
 
@@ -34,6 +33,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/portfolio" element={<Portfolio />} />
+                <Route path="/portfolio/:id" element={<ProjectDetail />} />
                 <Route path="/timeline" element={<Timeline />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
@@ -46,8 +46,6 @@ const App = () => (
     </ThemeProvider>
   </QueryClientProvider>
 );
-import ScrollAnimation from './ScrollAnimation'; // adjust the path if needed
-
-
 
 export default App;
+

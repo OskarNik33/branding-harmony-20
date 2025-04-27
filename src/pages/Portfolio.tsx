@@ -1,16 +1,21 @@
-
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+import { useNavigate } from 'react-router-dom';
 
 type Category = 'Photography' | 'Motion Graphics' | 'Print Design' | 'Digital Design';
 
 const Portfolio = () => {
+  const navigate = useNavigate();
   const [openCategory, setOpenCategory] = useState<Category | null>(null);
   const [headerRef, isHeaderVisible] = useIntersectionObserver({ threshold: 0.1 }, true);
   
   const toggleCategory = (category: Category) => {
     setOpenCategory(openCategory === category ? null : category);
+  };
+
+  const handleProjectClick = (projectSlug: string) => {
+    navigate(`/portfolio/${projectSlug}`);
   };
 
   return (
@@ -46,13 +51,16 @@ const Portfolio = () => {
             {openCategory === category.name && (
               <div className="p-4 md:p-6 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.projects.map((project) => (
-                  <div key={project.title} className="thumbnail overflow-hidden">
+                  <div 
+                    key={project.title} 
+                    className="thumbnail overflow-hidden cursor-pointer transform transition-transform hover:scale-[1.02]"
+                    onClick={() => handleProjectClick(project.slug)}
+                  >
                     <img 
                       src={project.image} 
                       alt={project.title} 
                       className="w-full aspect-square object-cover"
                       onError={(e) => {
-                        // If image fails to load, show a fallback with category name
                         const target = e.target as HTMLImageElement;
                         target.src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000';
                       }}
@@ -72,12 +80,11 @@ const Portfolio = () => {
   );
 };
 
-// Sample data
 const categories = [
   {
     name: 'Photography',
     projects: [
-      { title: 'ZHA - music', year: '2023', image: 'https://github.com/OskarNik33/branding-harmony-20/blob/fa245bd4801eb0627cb80bc4aefc131254e2caa7/public/images/IMG_6663.jpg' },
+      { title: 'ZHA - music', year: '2023', slug: 'zha-music', image: 'https://github.com/OskarNik33/branding-harmony-20/blob/fa245bd4801eb0627cb80bc4aefc131254e2caa7/public/images/IMG_6663.jpg' },
       { title: 'INDUSTRIAL SPACES', year: '2023', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2000' },
       { title: 'MODERN PORTRAITS', year: '2022', image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2000' },
       { title: 'ARCHITECTURAL STUDY', year: '2022', image: 'https://images.unsplash.com/photo-1486744328743-c1a306f6caba?q=80&w=2000' },
