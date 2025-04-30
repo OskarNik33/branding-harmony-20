@@ -94,44 +94,44 @@ const Timeline = () => {
 const timelineData = [
   {
     date: '2023 - PRESENT',
-    title: 'SENIOR DIGITAL DESIGNER',
-    subtitle: 'Studio Brutalist',
+    title: 'ACTIVE MEMBER OF DESIGN TEAM',
+    subtitle: 'Student Section of the Slovenian Marketing Association (ŠSDMS)',
     description: 'Leading design projects for major tech and cultural clients, with a focus on creating bold, unapologetic digital experiences.',
-    tags: ['UX/UI', 'BRANDING', 'CREATIVE DIRECTION']
+    tags: ['BRAND IDENTITY', 'PRINT', 'DIGITAL','PHOTOGRAPHY','MOTION DESIGN']
   },
   {
-    date: '2022 - 2023',
-    title: 'CREATIVE DESIGNER',
-    subtitle: 'Neo Agency',
-    description: 'Developed brand identities and interactive experiences for clients in the fashion and technology sectors.',
-    tags: ['BRAND IDENTITY', 'PRINT', 'DIGITAL']
+    date: '2023 - PRESENT',
+    title: "Bachelor's degree in Graphic and Media Technology",
+    subtitle: 'University of Ljubljana, Faculty of Natural Sciences and Engineering',
+    description: 'Studying graphic design with a focus on print, typography, branding, and digital media.',
+    tags: ['EDUCATION', 'FOUNDATION', 'THEORY','BRAND IDENTITY', 'PRINT', 'DIGITAL']
   },
   {
     date: '2021 - 2022',
-    title: 'ALBUM ARTWORK PROJECT',
-    subtitle: 'Independent Work',
-    description: 'Created a series of album covers for independent musicians, exploring the intersection of typography and photography.',
-    tags: ['PRINT', 'TYPOGRAPHY', 'PHOTOGRAPHY']
+    title: 'VISUAL BRAND DESIGNER',
+    subtitle: '17. Fanfara',
+    description: 'Contributed to creating a cohesive visual identity for a marketing conference. Produced banners, posters, social media graphics, motion graphics and promotional materials',
+    tags: ['BRAND IDENTITY', 'PRINT', 'DIGITAL','MOTION DESIGN']
   },
   {
-    date: '2020 - 2021',
+    date: '2022 - 2023',
     title: 'JUNIOR DESIGNER',
-    subtitle: 'Design Collective',
-    description: 'Collaborated with a team of designers on branding and digital projects for startups and established companies.',
+    subtitle: 'Internavti d.o.o., Marketing Agency',
+    description: 'Collaborated with a team of designers on branding and digital projects for established companies.Crafted compelling graphics for social media, digital marketing campaigns, banners, and billboards. Worked on projects for clients like NLB, Ljubljanske Mlekarne, Petrol, A1, Govori bob, Generali, Velux, and MOL',
     tags: ['COLLABORATION', 'BRANDING', 'DIGITAL']
   },
   {
     date: '2019 - 2020',
     title: 'DESIGN INTERNSHIP',
-    subtitle: 'Print Studio',
-    description: 'Assisted with the production of print materials and learned about the technical aspects of print design.',
+    subtitle: 'Delo - Newspaper',
+    description: 'Gained foundational industry experience in editorial design. Worked on newspaper infographic design. Established a strong base for future professional skills',
     tags: ['PRINT', 'PRODUCTION', 'LEARNING']
   },
   {
-    date: '2016 - 2019',
+    date: '2017 - 2021',
     title: 'DESIGN EDUCATION',
-    subtitle: 'Design Academy',
-    description: 'Studied graphic design with a focus on typography, branding, and digital media. Graduated with honors.',
+    subtitle: 'Secondary School of Design and Photography Ljubljana',
+    description: 'Studied graphic design with a focus on typography, branding, and digital media.',
     tags: ['EDUCATION', 'FOUNDATION', 'THEORY']
   }
 ];
